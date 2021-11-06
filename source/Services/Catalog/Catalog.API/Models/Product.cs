@@ -18,6 +18,6 @@ namespace Catalog.API.Models
         public string Summary { get; set; }
         public string Description { get; set; }
         public string ImageFile { get; set; }
-        public string Price { get; set; }
+        public decimal Price { get; set; }
     }
 }
