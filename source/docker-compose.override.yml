@@ -8,7 +8,13 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-      
+  
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      - "6379:6379"
+
   catalog.api:
     container_name: catalog.api
     environment:
