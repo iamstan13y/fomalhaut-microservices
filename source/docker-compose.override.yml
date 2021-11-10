@@ -18,3 +18,13 @@ services:
       - catalogdb
     ports:
       - "8000:80"
+
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:ConnectionString=basketdb:6379"
+    depends_on: 
+      - basketdb
+    ports:
+      - "8001:80"
+
