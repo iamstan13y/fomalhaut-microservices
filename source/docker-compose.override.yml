@@ -8,7 +8,19 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-      
+  
+  discountdb:
+    container_name: discountdb
+    environment:
+      - POSTGRES_USER=iamjuliet
+      - POSTGRES_PASSWORD=admin1337
+      - POSTGRES_DB=DiscountDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
   catalog.api:
     container_name: catalog.api
     environment:
