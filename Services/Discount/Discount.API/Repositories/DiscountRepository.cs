@@ -56,7 +56,7 @@ namespace Discount.API.Repositories
                 (_configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
 
             var coupon = await connection.QueryFirstOrDefaultAsync<Coupon>
-                ("SELECT * FROM Discount WHERE ProductName = @productName", new { ProductName = productName});
+                ("SELECT * FROM Coupon WHERE ProductName = @ProductName", new { ProductName = productName});
 
             if (coupon == null)
             {
