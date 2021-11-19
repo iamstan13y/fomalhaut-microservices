@@ -9,9 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
     <Folder Include="Behaviours\" />
     <Folder Include="Features\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 
 </Project>
