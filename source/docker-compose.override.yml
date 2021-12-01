@@ -24,11 +24,11 @@ services:
   orderdb:
     container_name: orderdb
     environment:
-        SA_PASSWORD: "1337"
+        MSSQL_SA_PASSWORD: "K3!7hju1!37"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
-        - "1433:1433"
+        - "1434:1433"
 
   pgadmin:
     container_name: pgadmin
