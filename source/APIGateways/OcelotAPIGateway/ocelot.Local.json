@@ -14,7 +14,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "api/v1/Catalog/{id}",
+      "DownstreamPathTemplate": "/api/v1/Catalog/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
