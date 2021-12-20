@@ -1,16 +1,26 @@
-﻿using Shopping.Aggregrator.Models;
+﻿using Shopping.Aggregrator.Extensions;
+using Shopping.Aggregrator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Shopping.Aggregrator.Services
 {
     public class BasketService : IBasketService
     {
-        public Task<Basket> GetBasket(string username)
+        private readonly HttpClient _client;
+
+        public BasketService(HttpClient client)
         {
-            throw new NotImplementedException();
+            _client = client ?? throw new ArgumentNullException(nameof(client));
+        }
+
+        public async Task<Basket> GetBasket(string username)
+        {
+            var response = await _client.GetAsync($"/api/v1/Basket/{username}");
+            return await response.ReadContentAs<Basket>();
         }
     }
 }
