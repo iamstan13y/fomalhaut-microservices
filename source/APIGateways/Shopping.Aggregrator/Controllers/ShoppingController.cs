@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shopping.Aggregrator.Models;
+using System.Net;
 
 namespace Shopping.Aggregrator.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class ShoppingController : ControllerBase
     {
@@ -23,6 +25,33 @@ namespace Shopping.Aggregrator.Controllers
             _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
         }
 
-        public async Task<ActionResult<s>>
+        [HttpGet("{username}", Name = "GetShopping")]
+        [ProducesResponseType(typeof(ShoppingModel), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<ShoppingModel>> GetShopping(string username)
+        {
+            var basket = await _basketService.GetBasket(username);
+
+            foreach(var item in basket.Items)
+            {
+                var product = await _catalogService.GetCatalog(item.ProductId);
+
+                item.ProductName = product.Name;
+                item.Category = product.Category;
+                item.Summary = product.Summary;
+                item.Description = product.Description;
+                item.ImageFile = product.ImageFile;
+            }
+
+            var orders = await _orderService.GetOrdersByUsername(username);
+
+            var shopping = new ShoppingModel
+            {
+                Username = username,
+                BasketWithProducts = basket,
+                Orders = orders
+            };
+
+            return Ok(shopping);
+        }
     }
 }
