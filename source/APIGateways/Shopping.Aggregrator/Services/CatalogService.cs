@@ -23,10 +23,10 @@ namespace Shopping.Aggregrator.Services
             return await response.ReadContentAs<List<Catalog>>();
         }
 
-        public async Task<IEnumerable<Catalog>> GetCatalog(string id)
+        public async Task<Catalog> GetCatalog(string id)
         {
             var response = await _client.GetAsync($"/api/v1/Catalog/{id}");
-            return await response.ReadContentAs<List<Catalog>>();
+            return await response.ReadContentAs<Catalog>();
         }
 
         public async Task<IEnumerable<Catalog>> GetCatalogCategory(string category)

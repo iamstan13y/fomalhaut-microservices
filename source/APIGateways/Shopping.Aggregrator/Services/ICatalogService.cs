@@ -10,6 +10,6 @@ namespace Shopping.Aggregrator.Services
     {
         Task<IEnumerable<Catalog>> GetCatalog();
         Task<IEnumerable<Catalog>> GetCatalogCategory(string category);
-        Task<IEnumerable<Catalog>> GetCatalog(string id);
+        Task<Catalog> GetCatalog(string id);
     }
 }
