@@ -1,4 +1,5 @@
-﻿using Shopping.Web.Models;
+﻿using Shopping.Web.Extensions;
+using Shopping.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +17,33 @@ namespace Shopping.Web.Services
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
-        public Task<Catalog> CreateCatalog(Catalog catalog)
+        public async Task<IEnumerable<Catalog>> GetCatalog()
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync("/Catalog");
+            return await response.ReadContentAs<List<Catalog>>();
         }
 
-        public Task<IEnumerable<Catalog>> GetCatalog()
+        public async Task<Catalog> GetCatalog(string id)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Catalog/{id}");
+            return await response.ReadContentAs<Catalog>();
         }
 
-        public Task<Catalog> GetCatalog(string id)
+        public async Task<IEnumerable<Catalog>> GetCatalogByCategory(string category)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"/Catalog/GetProductByCategory/{category}");
+            return await response.ReadContentAs<List<Catalog>>();
         }
 
-        public Task<IEnumerable<Catalog>> GetCatalogCategory(string category)
+        public async Task<Catalog> CreateCatalog(Catalog model)
         {
-            throw new NotImplementedException();
+            var response = await _client.PostAsJson($"/Catalog", model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<Catalog>();
+            else
+            {
+                throw new Exception("Something went wrong when calling API.");
+            }
         }
     }
 }
