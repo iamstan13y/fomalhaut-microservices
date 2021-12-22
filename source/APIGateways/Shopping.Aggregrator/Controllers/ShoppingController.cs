@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.Aggregrator.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopping.Aggregrator.Models;
+using System;
+using System.Threading.Tasks;
 using System.Net;
 
 namespace Shopping.Aggregrator.Controllers
