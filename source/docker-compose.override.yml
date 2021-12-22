@@ -24,7 +24,7 @@ services:
   orderdb:
     container_name: orderdb
     environment:
-        MSSQL_SA_PASSWORD: "K3!7hju1!37"
+        SA_PASSWORD: "K3!7hju1!37"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
@@ -111,7 +111,7 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;user Id=sa;Password=K3!7hju1!37"
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=K3!7hju1!37"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - orderdb
@@ -129,3 +129,18 @@ services:
       - discount.api
     ports:
       - "8010:80"
+  shopping.aggregrator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:CatalogUrl=http://catalog.api"
+      - "ApiSettings:BasketUrl=http://basket.api"
+      - "ApiSettings:OrderingUrl=http://ordering.api"
+    depends_on:
+      - catalog.api
+      - basket.api
+      - ordering.api
+    ports:
+      - "8005:80"
+
+       
