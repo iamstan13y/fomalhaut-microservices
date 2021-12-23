@@ -64,11 +64,18 @@ services:
       context: .
       dockerfile: APIGateways/Shopping.Aggregrator/Dockerfile
 
+  shopping.web:
+    image: ${DOCKER_REGISTRY-}shoppingweb
+    build:
+      context: .
+      dockerfile: WebApps/AspnetRunBasics/Dockerfile
+
 volumes:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 
 
 
