@@ -1,15 +1,12 @@
-using AspnetRunBasics.Data;
-using AspnetRunBasics.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopping.Web.Services;
 using System;
 
-namespace AspnetRunBasics
+namespace Shopping.Web
 {
     public class Startup
     {

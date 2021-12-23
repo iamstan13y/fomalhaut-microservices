@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using AspnetRunBasics.Entities;
-using AspnetRunBasics.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shopping.Web.Models;
 using Shopping.Web.Services;
 
-namespace AspnetRunBasics
+namespace Shopping.Web.Pages
 {
     public class CartModel : PageModel
     {
