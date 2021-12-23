@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shopping.Web.Models;
+using Shopping.Web.Services;
+
+namespace Shopping.Web.Pages
+{
+    public class ProductModel : PageModel
+    {
+        private readonly ICatalogService _catalogService;
+        private readonly IBasketService _basketService;
+
+        public ProductModel(ICatalogService catalogService, IBasketService basketService)
+        {
+            _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
+            _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
+        }
+
+        public IEnumerable<string> CategoryList { get; set; } = new List<string>();
+        public IEnumerable<Catalog> ProductList { get; set; } = new List<Catalog>();
+
+        [BindProperty(SupportsGet = true)]
+        public string SelectedCategory { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string categoryName)
+        {
+            var productList = await _catalogService.GetCatalog();
+            CategoryList = productList.Select(p => p.Category).Distinct();
+
+            if (!string.IsNullOrWhiteSpace(categoryName))
+            {
+                ProductList = productList.Where(p => p.Category == categoryName);
+                SelectedCategory = categoryName;
+            }
+            else
+            {
+                ProductList = productList;
+            }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAddToCartAsync(string productId)
+        {
+            var product = await _catalogService.GetCatalog(productId);
+
+            var basket = await _basketService.GetBasket("juliet");
+
+            basket.Items.Add(new BasketItem
+            {
+                ProductId = product.Id,
+                Color = "Blue",
+                Price = product.Price,
+                Quantity = 1,
+                ProductName = product.Name
+            });
+
+            var updatedBasket = await _basketService.UpdateBasket(basket);
+
+            return RedirectToPage("Cart");
+        }
+    }
+}
