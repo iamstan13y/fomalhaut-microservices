@@ -28,7 +28,7 @@ namespace Shopping.Web.Pages
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
         {
-            var basket = await _basketService.GetBasket("juliet");
+            await _basketService.GetBasket("juliet");
 
             var item = basket.Items.Single(x => x.ProductId == productId);
             basket.Items.Remove(item);
